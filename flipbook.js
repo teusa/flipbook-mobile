@@ -97,7 +97,7 @@
                 opts.path += '/';
             }
 
-            _mobile = mobile() || opts.gif;
+            _mobile = /*mobile() ||*/ opts.gif;
         };
 
         var kickoff = function() {
