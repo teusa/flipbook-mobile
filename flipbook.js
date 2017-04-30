@@ -69,9 +69,9 @@
             var requiredParams;
 
             if (opts.sprite) {
-                requiredParams = ['id', 'path','extension', 'filename', 'rows'];
+                requiredParams = ['id', 'filename', 'rows'];
             } else {
-                requiredParams = ['id', 'path','extension', 'filename', 'count'];
+                requiredParams = ['id', 'filename', 'count'];
             }
 
             requiredParams.forEach(function(p) {
@@ -92,10 +92,10 @@
                 opts.count = parseInt(opts.count);
             }
             
-            opts.path = opts.path.trim();
-            if (opts.path.lastIndexOf('/') !== opts.path.length - 1) {
-                opts.path += '/';
-            }
+            // opts.path = opts.path.trim();
+            // if (opts.path.lastIndexOf('/') !== opts.path.length - 1) {
+            //     opts.path += '/';
+            // }
 
             _mobile = /*mobile() ||*/ opts.gif;
         };
