@@ -231,20 +231,7 @@
         };
 
         var createImageSrc = function(index) {
-            var match = opts.filename.match(/\%\dd/);
-            var total = match[0].charAt(1);
-            var len = index.toString().length;
-            var toAdd = Math.max(total - len, 0);
-            var name = opts.filename.split(/\%\dd/)[0];
-
-            var src = opts.path + name;
-
-            for (var i = 0; i < toAdd; i++) {
-                src += '0';
-            } 
-
-            src += index + '.' + opts.extension;
-            return src;
+            return opts.filename(index);
         };
 
         var createCanvas = function(el) {
