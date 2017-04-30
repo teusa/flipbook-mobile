@@ -4,7 +4,7 @@
   "description": "Scroll-based inline flipbook animation for the internet, including mobile devices.",
   "main": "flipbook.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No tests have been implemented.\""
   },
   "repository": {
     "type": "git",
