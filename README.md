@@ -1,11 +1,13 @@
 # flipbook.js
 
+Originally by [Russell Goldenberg](https://github.com/russellgoldenberg/flipbook.js)
+
 Scroll-based inline flipbook animation for the internet. Checkout the [demo](https://russellgoldenberg.github.io/flipbook.js).
 
 
 ## Installation
 
-``` npm install flipbook```
+``` npm install flipbook-mobile```
 
 or 
 
