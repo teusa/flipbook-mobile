@@ -231,7 +231,7 @@
         };
 
         var createImageSrc = function(index) {
-            return opts.filename(index);
+            return opts.filename(index-1);
         };
 
         var createCanvas = function(el) {
