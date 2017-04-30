@@ -56,10 +56,12 @@
                 loadImages(function(err) {
                     if (err) {
                         error(err);
-                    } else {
-                        kickoff();
                     }
-                });    
+                    // else {
+                    //     kickoff();
+                    // }
+                });
+                kickoff();   
             }
         };
 
@@ -196,7 +198,11 @@
                         loadNextImage(index, numImages, cb);
                     } else {
                         cb();
-                    }    
+                    }
+
+                    updateScroll();
+                    updateFrame(pageYOffset - _start, true);
+                    
                 }
             });
         };
@@ -274,22 +280,7 @@
             // cover or keep aspect only on desktop
             if (opts.cover && !_mobile) {
                 _canvasHeight = innerHeight;
-                var canvasRatio = _canvasWidth / _canvasHeight;
-
-                // if canvas is taller than original, must crop to cover
-                if (canvasRatio < _aspectRatio) {
-                    // take full canvas height and canvas ratio amount of width
-                    _crop.width = Math.floor(canvasRatio * _naturalHeight);
-                    _crop.height = _naturalHeight;
-                    _crop.offsetX = Math.floor((_naturalWidth - _crop.width) / 2);
-                    _crop.offsetY = 0;
-                } else {
-                    _crop.height = Math.floor(_naturalWidth / canvasRatio);
-                    _crop.width = _naturalWidth;
-                    _crop.offsetX = 0;
-                    _crop.offsetY = Math.floor((_naturalHeight - _crop.height) / 2);
-                }
-
+                
             } else {
                 _canvasHeight = Math.floor(_canvasWidth / _aspectRatio);    
             }
@@ -421,8 +412,32 @@
 
             var sx, sy, sw, sh;
 
+            if(index > _frames.length-1) {
+                // if(!frame || !image) {
+                    console.warn('no image for index', index);
+                    return;
+                // }
+            }
+
             var frame = _frames[index];
             var image = _images[frame.imageIndex];
+
+            console.log({frame: frame, image: image});
+
+            // if canvas is taller than original, must crop to cover
+            var canvasRatio = _canvasWidth / _canvasHeight;
+            if (canvasRatio < _aspectRatio) {
+                // take full canvas height and canvas ratio amount of width
+                _crop.width = Math.floor(canvasRatio * _naturalHeight);
+                _crop.height = _naturalHeight;
+                _crop.offsetX = Math.floor((_naturalWidth - _crop.width) / 2);
+                _crop.offsetY = 0;
+            } else {
+                _crop.height = Math.floor(_naturalWidth / canvasRatio);
+                _crop.width = _naturalWidth;
+                _crop.offsetX = 0;
+                _crop.offsetY = Math.floor((_naturalHeight - _crop.height) / 2);
+            }
 
             if (opts.cover && !_mobile) {
                 sx = _crop.offsetX;
