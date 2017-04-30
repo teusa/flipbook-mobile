@@ -1,6 +1,6 @@
 {
   "name": "flipbook-mobile",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Scroll-based inline flipbook animation for the internet, including mobile devices.",
   "main": "flipbook.js",
   "scripts": {
