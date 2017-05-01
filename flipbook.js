@@ -126,7 +126,7 @@
             _graphic = document.createElement('div');
             _graphic.classList.add('flipbook-graphic');
             _container.appendChild(_graphic);
-            _canvas = createCanvas(_graphic);
+            _canvas = opts.canvas || createCanvas(_graphic);
             _context = _canvas.getContext('2d');
         };
 
@@ -153,7 +153,7 @@
         var setupEvents = function() {
             window.addEventListener('resize', onResize, false);
             if (!_mobile) {
-                window.addEventListener('scroll', onScroll, false);    
+                (opts.scrolling.container || window).addEventListener('scroll', onScroll, false);    
             }
         };
 
@@ -202,7 +202,7 @@
 
                     updateScroll();
                     updateFrame(pageYOffset - _start, true);
-                    
+
                 }
             });
         };
@@ -309,12 +309,16 @@
             /*** update container ***/
             
             // container resize
-            var factor = getFactor();
 
             if (_mobile) {
                 _containerH = _graphicH;
             } else {
-                _containerH = innerHeight * factor;    
+                if(opts.scrolling) {
+                    _containerH = opts.scrolling.height;
+                }
+                else {
+                    _containerH = innerHeight * getFactor();
+                }
             }
             
             _container.style.height =  _containerH + 'px';
@@ -421,8 +425,6 @@
 
             var frame = _frames[index];
             var image = _images[frame.imageIndex];
-
-            console.log({frame: frame, image: image});
 
             // if canvas is taller than original, must crop to cover
             var canvasRatio = _canvasWidth / _canvasHeight;
