@@ -56,10 +56,12 @@
                 loadImages(function(err) {
                     if (err) {
                         error(err);
-                    } else {
-                        kickoff();
                     }
-                });    
+                    // else {
+                    //     kickoff();
+                    // }
+                });
+                kickoff();   
             }
         };
 
@@ -69,9 +71,9 @@
             var requiredParams;
 
             if (opts.sprite) {
-                requiredParams = ['id', 'path','extension', 'filename', 'rows'];
+                requiredParams = ['id', 'filename', 'rows'];
             } else {
-                requiredParams = ['id', 'path','extension', 'filename', 'count'];
+                requiredParams = ['id', 'filename', 'count'];
             }
 
             requiredParams.forEach(function(p) {
@@ -92,10 +94,10 @@
                 opts.count = parseInt(opts.count);
             }
             
-            opts.path = opts.path.trim();
-            if (opts.path.lastIndexOf('/') !== opts.path.length - 1) {
-                opts.path += '/';
-            }
+            // opts.path = opts.path.trim();
+            // if (opts.path.lastIndexOf('/') !== opts.path.length - 1) {
+            //     opts.path += '/';
+            // }
 
             _mobile = /*mobile() ||*/ opts.gif;
         };
@@ -124,7 +126,7 @@
             _graphic = document.createElement('div');
             _graphic.classList.add('flipbook-graphic');
             _container.appendChild(_graphic);
-            _canvas = createCanvas(_graphic);
+            _canvas = opts.canvas || createCanvas(_graphic);
             _context = _canvas.getContext('2d');
         };
 
@@ -151,7 +153,7 @@
         var setupEvents = function() {
             window.addEventListener('resize', onResize, false);
             if (!_mobile) {
-                window.addEventListener('scroll', onScroll, false);    
+                (opts.scrolling.container || window).addEventListener('scroll', onScroll, false);    
             }
         };
 
@@ -196,7 +198,11 @@
                         loadNextImage(index, numImages, cb);
                     } else {
                         cb();
-                    }    
+                    }
+
+                    updateScroll();
+                    updateFrame(pageYOffset - _start, true);
+
                 }
             });
         };
@@ -231,20 +237,7 @@
         };
 
         var createImageSrc = function(index) {
-            var match = opts.filename.match(/\%\dd/);
-            var total = match[0].charAt(1);
-            var len = index.toString().length;
-            var toAdd = Math.max(total - len, 0);
-            var name = opts.filename.split(/\%\dd/)[0];
-
-            var src = opts.path + name;
-
-            for (var i = 0; i < toAdd; i++) {
-                src += '0';
-            } 
-
-            src += index + '.' + opts.extension;
-            return src;
+            return opts.filename(index-1);
         };
 
         var createCanvas = function(el) {
@@ -287,22 +280,7 @@
             // cover or keep aspect only on desktop
             if (opts.cover && !_mobile) {
                 _canvasHeight = innerHeight;
-                var canvasRatio = _canvasWidth / _canvasHeight;
-
-                // if canvas is taller than original, must crop to cover
-                if (canvasRatio < _aspectRatio) {
-                    // take full canvas height and canvas ratio amount of width
-                    _crop.width = Math.floor(canvasRatio * _naturalHeight);
-                    _crop.height = _naturalHeight;
-                    _crop.offsetX = Math.floor((_naturalWidth - _crop.width) / 2);
-                    _crop.offsetY = 0;
-                } else {
-                    _crop.height = Math.floor(_naturalWidth / canvasRatio);
-                    _crop.width = _naturalWidth;
-                    _crop.offsetX = 0;
-                    _crop.offsetY = Math.floor((_naturalHeight - _crop.height) / 2);
-                }
-
+                
             } else {
                 _canvasHeight = Math.floor(_canvasWidth / _aspectRatio);    
             }
@@ -331,12 +309,16 @@
             /*** update container ***/
             
             // container resize
-            var factor = getFactor();
 
             if (_mobile) {
                 _containerH = _graphicH;
             } else {
-                _containerH = innerHeight * factor;    
+                if(opts.scrolling) {
+                    _containerH = opts.scrolling.height;
+                }
+                else {
+                    _containerH = innerHeight * getFactor();
+                }
             }
             
             _container.style.height =  _containerH + 'px';
@@ -434,8 +416,30 @@
 
             var sx, sy, sw, sh;
 
+            if(index > _frames.length-1) {
+                // if(!frame || !image) {
+                    console.warn('no image for index', index);
+                    return;
+                // }
+            }
+
             var frame = _frames[index];
             var image = _images[frame.imageIndex];
+
+            // if canvas is taller than original, must crop to cover
+            var canvasRatio = _canvasWidth / _canvasHeight;
+            if (canvasRatio < _aspectRatio) {
+                // take full canvas height and canvas ratio amount of width
+                _crop.width = Math.floor(canvasRatio * _naturalHeight);
+                _crop.height = _naturalHeight;
+                _crop.offsetX = Math.floor((_naturalWidth - _crop.width) / 2);
+                _crop.offsetY = 0;
+            } else {
+                _crop.height = Math.floor(_naturalWidth / canvasRatio);
+                _crop.width = _naturalWidth;
+                _crop.offsetX = 0;
+                _crop.offsetY = Math.floor((_naturalHeight - _crop.height) / 2);
+            }
 
             if (opts.cover && !_mobile) {
                 sx = _crop.offsetX;

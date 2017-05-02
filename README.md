@@ -2,6 +2,8 @@
 
 Scroll-based inline flipbook animation for mobile and desktop.
 
+Original [flipbook.js by Russell Goldenberg](https://github.com/russellgoldenberg/flipbook.js)
+
 
 ## Installation
 
