@@ -32,14 +32,8 @@ or
 * **id** (required)
 	[String] The id of the element where the flipbook will be inserted.
 
-* **path** (required)
-	[String] The relative path the directory where the images are.
-
 * **filename** (required)
-	[String] The pattern of filename (*%3d* = 3 digits or 001, 002, etc, ex. 'images-%3d').
-
-* **extension** (required)
-	[String] The type of image file *(png or jpg)*.
+	[Function] Given frame index, returns URL to frame image.
 
 * **count** (required)
 	[Number] Count of images in directory.
