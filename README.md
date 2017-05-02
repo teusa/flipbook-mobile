@@ -1,6 +1,6 @@
-# flipbook.js
+# flipbook-mobile
 
-Scroll-based inline flipbook animation for the internet. Checkout the [demo](https://russellgoldenberg.github.io/flipbook.js).
+Scroll-based inline flipbook animation for mobile and desktop.
 
 
 ## Installation
@@ -16,18 +16,16 @@ or
 ## Usage
 
 ``` html
-	<div id='walk-cycle'></div>
+<div id='walk-cycle'></div>
 
-	<script>
-		flipbook({
-			id: 'walk-cycle',
-			path: 'frames/walk',
-			filename: '%1d',
-			extension: 'jpg',
-			count: 86,
-			speed: 0.5
-		});
-	</script>
+<script>
+	flipbook({
+		id: 'walk-cycle',
+		filename: index => `https://<my_image_server>/my_flipbook_frames/${index}.jpg`,
+		count: 86,
+		speed: 0.5
+	});
+</script>
 ```
 
 ## Options
