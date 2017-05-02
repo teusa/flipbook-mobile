@@ -5,11 +5,11 @@ Scroll-based inline flipbook animation for the internet. Checkout the [demo](htt
 
 ## Installation
 
-``` npm install flipbook```
+``` npm install flipbook-mobile```
 
 or 
 
-``` <script src="flipbook.min.js"></script> ```
+``` <script src="flipbook.js"></script> ```
 
 
 
@@ -66,7 +66,7 @@ Convert a video to image sequence with ffmpeg:
 
 
 ## License & Credit
-
-MIT © [Russell Goldenberg](http://russellgoldenberg.com)
-
-Inspired by [canvid](https://github.com/gka/canvid/blob/master/canvid.js) and [stack](https://github.com/mbostock/stack)
+Original [flipbook.js](https://github.com/russellgoldenberg/flipbook.js):
+> MIT © [Russell Goldenberg](http://russellgoldenberg.com)
+>
+> Inspired by [canvid](https://github.com/gka/canvid/blob/master/canvid.js) and [stack](https://github.com/mbostock/stack)
