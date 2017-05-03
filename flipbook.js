@@ -37,6 +37,7 @@
         // misc
         var _images;
         var _frames;
+        var _previewSheetImage;
         var _ready;
         var _ticking;
         var _previousFrame = -1;
@@ -51,6 +52,7 @@
                  error('invalid options, missing ' + isInvalid);
              } else {
                 setupDefaultParams();
+                
                 setupDom();
                 setupStyles();
                 loadImages(function(err) {
@@ -61,7 +63,16 @@
                     //     kickoff();
                     // }
                 });
-                kickoff();   
+                loadImage({src:opts.previewSheetUrl}, function(err, previewImage) {
+                    if(err) {
+                        console.error('error loading preview sheet image', err);
+                    }
+                    else {
+                        _previewSheetImage = previewImage;
+                    }
+                    kickoff();
+                });
+                 
             }
         };
 
@@ -416,15 +427,20 @@
 
             var sx, sy, sw, sh;
 
+            var img, frameY;
             if(index > _frames.length-1) {
                 // if(!frame || !image) {
                     console.warn('no image for index', index);
-                    return;
+                    console.log('TODO use preview sheet!', _previewSheetImage);
+                    console.log(typeof _previewSheetImage);
+                    img = _previewSheetImage;
+                    frameY = 0;
                 // }
             }
-
-            var frame = _frames[index];
-            var image = _images[frame.imageIndex];
+            else {
+                img = _images[_frames[index].imageIndex].img;
+                frameY = _frames[index].y;
+            }
 
             // if canvas is taller than original, must crop to cover
             var canvasRatio = _canvasWidth / _canvasHeight;
@@ -443,17 +459,17 @@
 
             if (opts.cover && !_mobile) {
                 sx = _crop.offsetX;
-                sy = _crop.offsetY + _naturalHeight * frame.y;
+                sy = _crop.offsetY + _naturalHeight * frameY;
                 sw = _crop.width;
                 sh = _crop.height;
             } else {
                 sx = 0;
-                sy = _naturalHeight * frame.y;
+                sy = _naturalHeight * frameY;
                 sw = _naturalWidth;
                 sh = _naturalHeight;
             }
 
-            _context.drawImage(image.img, sx, sy, sw, sh, 0, 0, _canvasWidth, _canvasHeight);
+            _context.drawImage(img, sx, sy, sw, sh, 0, 0, _canvasWidth, _canvasHeight);
         };
 
         
