@@ -1,8 +1,8 @@
-# flipbook.js
+# flipbook-mobile
 
-Originally by [Russell Goldenberg](https://github.com/russellgoldenberg/flipbook.js)
+Scroll-based inline flipbook animation for mobile and desktop.
 
-Scroll-based inline flipbook animation for the internet. Checkout the [demo](https://russellgoldenberg.github.io/flipbook.js).
+Original [flipbook.js by Russell Goldenberg](https://github.com/russellgoldenberg/flipbook.js)
 
 
 ## Installation
@@ -11,39 +11,31 @@ Scroll-based inline flipbook animation for the internet. Checkout the [demo](htt
 
 or 
 
-``` <script src="flipbook.min.js"></script> ```
+``` <script src="flipbook.js"></script> ```
 
 
 
 ## Usage
 
 ``` html
-	<div id='walk-cycle'></div>
+<div id='walk-cycle'></div>
 
-	<script>
-		flipbook({
-			id: 'walk-cycle',
-			path: 'frames/walk',
-			filename: '%1d',
-			extension: 'jpg',
-			count: 86,
-			speed: 0.5
-		});
-	</script>
+<script>
+	flipbook({
+		id: 'walk-cycle',
+		filename: index => `https://<my_image_server>/my_flipbook_frames/${index}.jpg`,
+		count: 86,
+		speed: 0.5
+	});
+</script>
 ```
 
 ## Options
 * **id** (required)
 	[String] The id of the element where the flipbook will be inserted.
 
-* **path** (required)
-	[String] The relative path the directory where the images are.
-
 * **filename** (required)
-	[String] The pattern of filename (*%3d* = 3 digits or 001, 002, etc, ex. 'images-%3d').
-
-* **extension** (required)
-	[String] The type of image file *(png or jpg)*.
+	[Function] Given frame index, returns URL to frame image.
 
 * **count** (required)
 	[Number] Count of images in directory.
@@ -68,7 +60,7 @@ Convert a video to image sequence with ffmpeg:
 
 
 ## License & Credit
-
-MIT © [Russell Goldenberg](http://russellgoldenberg.com)
-
-Inspired by [canvid](https://github.com/gka/canvid/blob/master/canvid.js) and [stack](https://github.com/mbostock/stack)
+Original [flipbook.js](https://github.com/russellgoldenberg/flipbook.js):
+> MIT © [Russell Goldenberg](http://russellgoldenberg.com)
+>
+> Inspired by [canvid](https://github.com/gka/canvid/blob/master/canvid.js) and [stack](https://github.com/mbostock/stack)
