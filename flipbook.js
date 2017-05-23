@@ -37,6 +37,7 @@
         // misc
         var _images;
         var _frames;
+        var _loadingImage;
         var _ready;
         var _ticking;
         var _previousFrame = -1;
@@ -53,6 +54,15 @@
                 setupDefaultParams();
                 setupDom();
                 setupStyles();
+                loadImage({src: opts.loadingImage}, function(err, image) {
+                    if(err) {
+                        console.error(err);
+                    }
+                    else {
+                        console.info('got loading image', image);
+                        _loadingImage = {img: image};
+                    } 
+                });
                 loadImages(function(err) {
                     if (err) {
                         error(err);
@@ -414,17 +424,20 @@
         var drawFrame = function(index) {
             _context.clearRect(0, 0, _canvasWidth, _canvasHeight);
 
-            var sx, sy, sw, sh;
+            var sx, sy, sw, sh, frame, image;
 
             if(index > _frames.length-1) {
                 // if(!frame || !image) {
-                    console.warn('no image for index', index);
-                    return;
+                    console.warn('no image for index', index, ' using loading image');
+                    frame = {y:0};
+                    image = _loadingImage;
                 // }
             }
+            else {
+                frame = _frames[index];
+                image = _images[frame.imageIndex];
+            }
 
-            var frame = _frames[index];
-            var image = _images[frame.imageIndex];
 
             // if canvas is taller than original, must crop to cover
             var canvasRatio = _canvasWidth / _canvasHeight;
