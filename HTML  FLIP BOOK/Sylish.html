@@ -1,0 +1,65 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Slider de prueba</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style223.css">
+    <link rel="stylesheet" href="Fonts.css">
+</head>
+<header>
+
+     <h1>ATHENA BITCOIN</h1>
+
+
+</header>
+<body>
+    <p></p>
+    <div class="main">
+
+  <div class="slides"> 
+  
+                     <img src="https://raw.githubusercontent.com/AthenaBitcoin/flipbook-mobile/master/img/stylish/1.jpg" alt=""> 
+                     <img src="https://raw.githubusercontent.com/AthenaBitcoin/flipbook-mobile/master/img/stylish/2.jpg" alt="">  
+                     <img src="https://raw.githubusercontent.com/AthenaBitcoin/flipbook-mobile/master/img/stylish/3.jpg" alt="">
+                     <img src="https://raw.githubusercontent.com/AthenaBitcoin/flipbook-mobile/master/img/stylish/4.jpg" alt="">
+
+
+
+                    
+   </div>
+
+
+
+    </div>
+    
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="C:\Users\sebas\Desktop\prueba\jquery.slides.js"></script>
+    <script>
+        $(function(){
+  $(".slides").slidesjs({
+    play: {
+      active: true,
+        // [boolean] Generate the play and stop buttons.
+        // You cannot use your own buttons. Sorry.
+      effect: "slide",
+        // [string] Can be either "slide" or "fade".
+      interval: 500,
+        // [number] Time spent on each slide in milliseconds.
+      auto: false,
+        // [boolean] Start playing the slideshow on load.
+      swap: true,
+        // [boolean] show/hide stop and play buttons
+      pauseOnHover: false,
+        // [boolean] pause a playing slideshow on hover
+      restartDelay: 2500
+        // [number] restart delay on inactive slideshow
+    }
+  });
+});
+         
+         </script>
+
+</body>
+</html>
