@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>stylish Flipbook</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+    <style>
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 17px;
+            font-family: Helvetica, sans-serif;
+            font-weight: 300;
+        }
+        article {
+        }
+        p {
+            color: #333;
+            font-size: 1.2em;
+            line-height: 1.6;
+            max-width: 40em;
+            padding: 1em;
+            margin: 0 auto;
+        }
+        h1 {
+            font-weight: 300;
+            margin: 1em;
+            text-align: center;
+        }
+        p.description {
+            font-style: italic;
+            font-size: 1em;
+            text-align: center;
+            max-width: 100%;
+        }
+
+
+
+        .s-loader {
+            position: relative;
+        }
+        .s-loader--progress {
+            width: 0;
+            height: 2px;
+            margin-top: 0.25em;
+            margin-bottom: 2em;
+            background-color: #ccc;
+        }
+        .s-loader--text {
+            color: #999;
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div id='stylish'></div>
+<div class='s-loader'>
+    <div class='s-loader--text'>Loading animation...</div>
+    <div class='s-loader--progress'></div>
+</div>
+
+<script src='flipbook.js'></script>
+<script>
+  var progressEl = document.getElementsByClassName('s-loader--progress')[0];
+
+  flipbook({
+    id: 'stylish',
+    path: 'img/stylish/',
+    filename: '%0d',
+    extension: 'jpg',
+    count: 4,
+    speed: 0.8,
+    cover: true,
+    progress: function(data) {
+      progressEl.style.width = data.percent + '%';
+    },
+    loaded: function() {
+      var loaderEl = document.getElementsByClassName('s-loader')[0];
+      loaderEl.parentNode.removeChild(loaderEl);
+    }
+  });
+
+</script>
+
+
+</body>
+</html>
