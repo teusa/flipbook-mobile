@@ -168,15 +168,15 @@
 
     var loadNextImage = function(index, numImages, cb) {
       var image = _images[index];
-      loadImage(image, function(err, img) {
+      loadImage(image, function(err, img2) {
         if (err) {
           cb('error loading image');
         } else {
-          image.img = img;
+          image.img2 = img2;
 
           // set aspect ratio and offscreen canvas sizes
           if (index === 0) {
-            setFrameSizes(img, image.rows);
+            setFrameSizes(img2, image.rows);
           }
 
           for (var j = 0; j < image.rows; j++) {;
@@ -201,9 +201,9 @@
       });
     };
 
-    var setFrameSizes = function(img, rows) {
-      _naturalWidth = img.naturalWidth;
-      _naturalHeight = img.naturalHeight / rows;
+    var setFrameSizes = function(img2, rows) {
+      _naturalWidth = img2.naturalWidth;
+      _naturalHeight = img2.naturalHeight / rows;
       _aspectRatio = Math.round(_naturalWidth / _naturalHeight  * 1000) / 1000;
     };
 
@@ -449,7 +449,7 @@
         sh = _naturalHeight;
       }
 
-      _context.drawImage(image.img, sx, sy, sw, sh, 0, 0, _canvasWidth, _canvasHeight);
+      _context.drawImage(image.img2, sx, sy, sw, sh, 0, 0, _canvasWidth, _canvasHeight);
     };
 
 
@@ -468,14 +468,14 @@
     };
 
     var loadImage = function(f, cb) {
-      var img = new Image();
-      img.onload = function() {
-        cb(null, img);
+      var img2 = new Image();
+      img2.onload = function() {
+        cb(null, img2);
       };
-      img.onerror = function() {
+      img2.onerror = function() {
         cb('error loading image: ' + f.src);
       };
-      img.src = f.src;
+      img2.src = f.src;
     };
 
     var raf = function() {
