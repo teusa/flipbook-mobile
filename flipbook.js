@@ -168,15 +168,15 @@
 
     var loadNextImage = function(index, numImages, cb) {
       var image = _images[index];
-      loadImage(image, function(err, img2) {
+      loadImage(image, function(err, example_files) {
         if (err) {
           cb('error loading image');
         } else {
-          image.img2 = img2;
+          image.example_files = example_files;
 
           // set aspect ratio and offscreen canvas sizes
           if (index === 0) {
-            setFrameSizes(img2, image.rows);
+            setFrameSizes(example_files, image.rows);
           }
 
           for (var j = 0; j < image.rows; j++) {;
@@ -201,9 +201,9 @@
       });
     };
 
-    var setFrameSizes = function(img2, rows) {
-      _naturalWidth = img2.naturalWidth;
-      _naturalHeight = img2.naturalHeight / rows;
+    var setFrameSizes = function(example_files, rows) {
+      _naturalWidth = example_files.naturalWidth;
+      _naturalHeight = example_files.naturalHeight / rows;
       _aspectRatio = Math.round(_naturalWidth / _naturalHeight  * 1000) / 1000;
     };
 
@@ -212,16 +212,18 @@
         opts.progress({
           frame: (index + 1),
           total: opts.count,
-          percent: Math.round(index / (numImages - 1) * 100)
+          percent: Math.round(index / (numImages - 1 ) * 100)
         });
       }
     };
 
     var createImageData = function(numImages) {
-      var images = [];
-      for (var i = 0; i < numImages; i++) {
-
-        var src = createImageSrc(i + 1);
+      var images = [ "1528138821","1528138933","1528139054","1528139193","1528139302","1528139421","1528139786","1528139908","1528140031","1528140139"];
+      images.length
+      for (var i = 0;  i <  images.length ; i++ 
+       ) {
+         
+        var src = createImageSrc(  images[i] );
         images[i] = {
           src: src,
           rows: opts.sprite ? opts.rows[i] : 1
@@ -449,7 +451,7 @@
         sh = _naturalHeight;
       }
 
-      _context.drawImage(image.img2, sx, sy, sw, sh, 0, 0, _canvasWidth, _canvasHeight);
+      _context.drawImage(image.example_files, sx, sy, sw, sh, 0, 0, _canvasWidth, _canvasHeight);
     };
 
 
@@ -468,14 +470,14 @@
     };
 
     var loadImage = function(f, cb) {
-      var img2 = new Image();
-      img2.onload = function() {
-        cb(null, img2);
+      var example_files = new Image();
+      example_files.onload = function() {
+        cb(null, example_files);
       };
-      img2.onerror = function() {
+      example_files.onerror = function() {
         cb('error loading image: ' + f.src);
       };
-      img2.src = f.src;
+      example_files.src = f.src;
     };
 
     var raf = function() {
